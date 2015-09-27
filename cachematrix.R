@@ -1,6 +1,7 @@
 ## Put comments here that give an overall description of what your
 ## functions do
 
+
 ## In computing theory, there is a common theme of tradeoff between storage
 ## space and running time (space-time tradeoff). The functions makeCacheMatrix
 ## and cacheSolve make the sacrifice of using memory storage to speed up
@@ -11,21 +12,42 @@
 ## of the inverse of a large-sized matrix (say 1 million rows by 1 million
 ## columns).
 ##
-## makeCacheMatrix is a data structure that stores both the matrix object and
+## makeCacheMatrix creates an environment that stores both the matrix object and
 ## its inverse through set and get functions. cacheSolve is the interface
-## function to makeCacheMatrix and serves two functions: to calculate the matrix
-## inverse if it had not been calculated, or to return the inverse matrix if it
-## had already been calculated.
+## for this environment that only calculates the inverse matrix if it had not
+## been calculated, then return the inverse matrix. Using this system, we avoid
+## performing repeat calculations.
+
 
 ## Write a short comment describing this function
 
+## makeCacheMatrix is a list of four functions: set/get for the matrix object,
+## and set/get for the inverse of the matrix object. The matrix that you pass
+## into the function is stored in the environment makeCacheMatrix sets up rather
+## than the environment where this function is called, and similarly for the
+## inverse matrix.
 makeCacheMatrix <- function(x = matrix()) {
-
+    inv < NULL
+    set <- function(y) {
+        x <<- y
+        
+        # This line is here to remove "old" inverse matrices when you give your
+        # makeCacheMatrix() object a new matrix value.
+        inv <<- NULL
+    }
+    
+    get <- function() x
+    
+    setInverse <- function() inv <<- solve(x)
+    
+    getInverse <- function() inv
 }
 
 
 ## Write a short comment describing this function
 
+## cacheSolve interfaces with makeCacheMatrix to calculate the matrix inverse
+## if it had not been performed, else return the inverse matrix.
 cacheSolve <- function(x, ...) {
         ## Return a matrix that is the inverse of 'x'
 }
